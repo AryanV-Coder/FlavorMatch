@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for the FlavorMatch application using Supabase for authentication",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^1.35.7",
+    "dotenv": "^17.2.3",
+    "express": "^4.17.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

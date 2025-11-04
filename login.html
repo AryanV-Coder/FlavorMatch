@@ -96,19 +96,43 @@
     </div>
 
     <script>
-        function login() {
-            var f = document.getElementById('family').value;
-            var m = document.getElementById('member').value;
-            var p = document.getElementById('pass').value;
+        async function login() {
+            const family = document.getElementById('family').value;
+            const member = document.getElementById('member').value;
+            const password = document.getElementById('pass').value;
             
-            if (f == 'Smith' && m == 'John' && p == 'john123') {
+            if (family == 'Smith' && member == 'John' && password == 'john123') {
                 window.location.href = 'dashboard.html';
-            } else if (f == 'Smith' && m == 'Sarah' && p == 'sarah123') {
+            } else if (family == 'Smith' && member == 'Sarah' && password == 'sarah123') {
                 window.location.href = 'dashboard.html';
-            } else if (f == 'Johnson' && m == 'Mike' && p == 'mike123') {
+            } else if (family == 'Johnson' && member == 'Mike' && password == 'mike123') {
                 window.location.href = 'dashboard.html';
             } else {
                 alert('Wrong username or password!');
+            }
+            try {
+                const response = await fetch('http://localhost:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        family_name: family,
+                        member_name: member,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert(data.message || 'Login failed!');
+                }
+            } catch (error) {
+                alert('Error connecting to server');
+                console.error(error);
             }
         }
     </script>
