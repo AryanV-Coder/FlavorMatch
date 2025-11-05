@@ -8,11 +8,11 @@ router = APIRouter()
 
 @router.post("/chat")
 async def chat(user_request : PromptRequest):
-    if user_request is None :
+    if user_request.request is None :
         print("🛑 NOTHING RECIEVED")
         raise HTTPException(status_code = 400, detail = "Nothing Recieved")
     else :
-        query = sql_query_generator(user_request)
+        query = sql_query_generator(user_query = user_request.request, family_name=user_request.family_name,member_name=user_request.member_name)
         print(f"✅ SQL QUERY GENERATED : {query}")
 
         conn,cursor = connect_postgres()
@@ -30,7 +30,7 @@ async def chat(user_request : PromptRequest):
         cursor.close()
         conn.close()
 
-        response = ai_analysis(user_request=user_request,data = result)
+        response = ai_analysis(user_request=user_request.request,data = result)
 
         return {
             "status" : "success",

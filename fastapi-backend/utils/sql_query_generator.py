@@ -1,6 +1,12 @@
 from utils.gemini import model
 
-def sql_query_generator(user_query: str):
+def sql_query_generator(user_query: str , family_name : str , member_name : str):
+
+    user_request = f'''
+                    family_name : {family_name},
+                    member_name : {member_name},
+                    user_query : {user_query}
+                    '''
 
     prompt = [
         {
@@ -60,7 +66,7 @@ Now, convert the following natural language query to SQL:"""
             "role": "user", 
             "parts": [
                 {
-                    "text": user_query
+                    "text": user_request
                 }
             ]
         }
