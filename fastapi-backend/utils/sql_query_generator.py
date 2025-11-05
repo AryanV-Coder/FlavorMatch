@@ -40,25 +40,47 @@ RELATIONSHIPS:
 - member.family_id → family.family_id (CASCADE on UPDATE and DELETE)
 - food.member_id → member.member_id (CASCADE on UPDATE and DELETE)
 
+CONTEXT:
+I will provide you with three pieces of information:
+1. family_name: The family name of the user currently using the application
+2. member_name: The member name of the user currently using the application
+3. user_query: The natural language query from the user
+
+IMPORTANT: The user (identified by member_name) might want to query food information about OTHER members in the same family, not just themselves. Always interpret the user_query carefully to determine which member's data should be retrieved.
+
 INSTRUCTIONS:
 1. Generate ONLY the SQL query without any explanation or markdown formatting
 2. Use proper PostgreSQL syntax
-3. Use table aliases for better readability when joining tables
-4. Include appropriate WHERE clauses based on the natural language query
-5. Use JOIN operations when querying across related tables
-6. For aggregations, use appropriate GROUP BY clauses
-7. For ordering results, use ORDER BY when it makes sense
-8. Use LIKE with '%' wildcards for partial text matching when appropriate
-9. Return SELECT queries only, you only need to retrieve data.
-10. Handle date/time comparisons appropriately using timestamp operations
-11. For yes/no or boolean-like fields (is_liked, is_healthy), assume values are stored as strings like 'yes'/'no' or 'true'/'false'
+3. ALWAYS use JOINs to include both family_username and member_username in your SELECT statements
+4. The query should ALWAYS return: family.family_username AS family_name, member.member_username AS member_name (along with other requested data)
+5. Use table aliases for better readability (f for family, m for member, fd for food)
+6. Filter by the provided family_name using: family.family_username = '{family_name}'
+7. When the query refers to a specific member (including pronouns like "my", "I", or specific names), filter by that member
+8. For queries asking for recommendations (e.g., "What should I eat today", "What should I make for [person]'s birthday"):
+   - Return foods that are liked (is_liked = 'yes') AND healthy (is_healthy = 'yes')
+   - Include variety by selecting from recent history
+   - If the query mentions a specific member or occasion, tailor the results accordingly
+   - Limit results to a reasonable number (e.g., 5-10 suggestions)
+9. Use appropriate WHERE clauses based on the natural language query
+10. For aggregations, use appropriate GROUP BY clauses
+11. For ordering results, use ORDER BY timestamp DESC when showing recent data
+12. Use LIKE with '%' wildcards for partial text matching when appropriate
+13. Return SELECT queries only, you only need to retrieve data
+14. Handle date/time comparisons appropriately using timestamp operations
+15. For yes/no or boolean-like fields (is_liked, is_healthy), assume values are stored as strings like 'yes'/'no'
 
 EXAMPLES:
-- "Show all members in a family" → SELECT m.* FROM member m WHERE m.family_id = ?
-- "Get all liked foods for a member" → SELECT f.* FROM food f WHERE f.member_id = ? AND f.is_liked = 'yes'
-- "Find healthy foods eaten by members of a family" → SELECT f.* FROM food f JOIN member m ON f.member_id = m.member_id WHERE m.family_id = ? AND f.is_healthy = 'yes'
+- "Show all my food history" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = '{member_name}' ORDER BY fd.timestamp DESC
 
-Now, convert the following natural language query to SQL:"""
+- "What does Aryan like to eat?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' AND fd.is_liked = 'yes' ORDER BY fd.timestamp DESC
+
+- "What should I eat today?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = '{member_name}' AND fd.is_liked = 'yes' AND fd.is_healthy = 'yes' ORDER BY fd.timestamp DESC LIMIT 10
+
+- "What should I make on Aryan's birthday?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' AND fd.is_liked = 'yes' AND fd.is_healthy = 'yes' ORDER BY fd.timestamp DESC LIMIT 10
+
+- "Show healthy foods in my family" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND fd.is_healthy = 'yes' ORDER BY fd.timestamp DESC
+
+"""
                 }
             ]
         },
