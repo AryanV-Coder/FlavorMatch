@@ -145,14 +145,17 @@ async function registerMember(familyName, memberName, password) {
 }
 
 // 4. Dashboard - Add Food Entry
-async function addFoodEntry(memberId, foodName, isLiked, isHealthy) {
+async function addFoodEntry(memberId, foodName, isLiked, isHealthy, timestamp) {
     try {
+        // If no timestamp is provided, use current timestamp
+        const foodTimestamp = timestamp || new Date().toISOString().split('T')[0];
+        
         const query = `
             INSERT INTO food (timestamp, member_id, food, is_liked, is_healthy)
-            VALUES (CURRENT_TIMESTAMP, $1, $2, $3, $4)
+            VALUES (TO_TIMESTAMP($1, 'YYYY-MM-DD'), $2, $3, $4, $5)
             RETURNING food_id
         `;
-        await executeQuery(query, [memberId, foodName, isLiked, isHealthy]);
+        await executeQuery(query, [foodTimestamp, memberId, foodName, isLiked, isHealthy]);
 
         return { success: true, message: "Food entry added successfully!" };
     } catch (error) {

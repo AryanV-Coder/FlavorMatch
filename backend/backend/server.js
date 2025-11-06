@@ -62,8 +62,9 @@ app.post('/api/register-member', async (req, res) => {
 // Add food entry route
 app.post('/api/food-entry', async (req, res) => {
     try {
-        const { memberId, foodName, isLiked, isHealthy } = req.body;
-        const result = await db.addFoodEntry(memberId, foodName, isLiked, isHealthy);
+        const { memberId, foodName, isLiked, isHealthy, timestamp } = req.body;
+        console.log('Received food entry:', { memberId, foodName, isLiked, isHealthy, timestamp }); // Debug log
+        const result = await db.addFoodEntry(memberId, foodName, isLiked, isHealthy, timestamp);
         res.json(result);
     } catch (error) {
         console.error('Food entry error:', error);
