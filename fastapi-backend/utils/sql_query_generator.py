@@ -54,7 +54,7 @@ INSTRUCTIONS:
 3. ALWAYS use JOINs to include both family_username and member_username in your SELECT statements
 4. The query should ALWAYS return: family.family_username AS family_name, member.member_username AS member_name (along with other requested data)
 5. Use table aliases for better readability (f for family, m for member, fd for food)
-6. Filter by the provided family_name using: family.family_username = '{family_name}'
+6. Filter by the provided family_name using: family.family_username = "{family_name}"
 7. When the query refers to a specific member (including pronouns like "my", "I", or specific names), filter by that member
 8. For queries asking for recommendations (e.g., "What should I eat today", "What should I make for [person]'s birthday"):
    - Return foods that are liked (is_liked = 'yes') AND healthy (is_healthy = 'yes')
