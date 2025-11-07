@@ -127,7 +127,7 @@
         
         <button onclick="register()">Register</button>
         
-        <a href="login.html">← Back to Login</a>
+        <a href="index.html">← Back to Login</a>
     </div>
 
     <script>
@@ -165,7 +165,7 @@
 
                 if (data.success) {
                     alert('Member registered successfully!');
-                    window.location.href = 'login.html';
+                    window.location.href = 'index.html';
                 } else {
                     errorMessage.textContent = data.message || 'Registration failed';
                 }

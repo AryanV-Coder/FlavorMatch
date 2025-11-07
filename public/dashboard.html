@@ -207,7 +207,7 @@
             </div>
         </div>
 
-        <a href="login.html" onclick="logout()">← Logout</a>
+        <a href="index.html" onclick="logout()">← Logout</a>
     </div>
 
     <style>
@@ -369,7 +369,7 @@
         window.onload = async function() {
             const userData = sessionStorage.getItem('userData');
             if (!userData) {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }
             await initializeServer();
         };
@@ -519,7 +519,7 @@
             const userData = JSON.parse(sessionStorage.getItem('userData'));
             if (!userData || !userData.familyName || !userData.memberName) {
                 alert('Please log in again');
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
                 return;
             }
 
