@@ -419,7 +419,7 @@
                     throw new Error('User not logged in');
                 }
 
-                const response = await fetch('http://localhost:3000/api/food-entry', {
+                const response = await fetch('/api/food-entry', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
