@@ -356,7 +356,7 @@
         // Function to initialize the server
         async function initializeServer() {
             try {
-                await fetch('https://flavormatch.onrender.com/start-server', {
+                await fetch('https://flavor-match-fastapi-backend.vercel.app/start-server', {
                     method: 'GET'
                 });
                 console.log('Server initialized successfully');
@@ -531,7 +531,7 @@
             showTypingIndicator();
 
             try {
-                const response = await fetch('https://flavormatch.onrender.com/chat', {
+                const response = await fetch('https://flavor-match-fastapi-backend.vercel.app/chat', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
