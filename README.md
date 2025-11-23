@@ -35,6 +35,52 @@ Over time, the system learns patterns and provides personalized food suggestions
 
 ---
 
+## 👨‍💻 Tech Stack
+- **Backend:** PostgreSQL, Node.js (Express), FastAPI (Python)
+- **Frontend:** HTML, CSS, JavaScript
+- **Deployment:** Vercel (Frontend + Node.js Backend)
+
+---
+
+## 📁 Project Structure
+```
+FlavorMatch/
+├── api/                           # Node.js Backend (Express)
+│   ├── server.js                  # Main server file
+│   ├── package.json               # Node.js dependencies
+│   ├── config/
+│   │   └── db.js                  # PostgreSQL connection config
+│   ├── controllers/
+│   │   └── authController.js      # Authentication logic
+│   └── routes/
+│       └── authRoutes.js          # API routes
+│
+├── fastapi-backend/               # Python Backend (FastAPI)
+│   ├── main.py                    # FastAPI main application
+│   ├── requirements.txt           # Python dependencies
+│   ├── models/
+│   │   └── prompt_request.py      # Request models
+│   ├── routers/
+│   │   └── chat.py                # Chat API endpoints
+│   └── utils/
+│       ├── chatbot_response.py    # AI chatbot logic
+│       ├── gemini.py              # Google Gemini AI integration
+│       ├── sql_query_generator.py # SQL query generation
+│       └── supabase_config.py     # Supabase configuration
+│
+├── public/                        # Frontend (Static Files)
+│   ├── index.html                 # Login page
+│   ├── register_family.html       # Family registration
+│   ├── register_member.html       # Member registration
+│   └── dashboard.html             # Food tracking dashboard
+│
+├── vercel.json                    # Vercel deployment configuration
+├── postgresql_table_creation_code.txt  # Database schema
+└── README.md                      # Project documentation
+```
+
+---
+
 ## 🧠 System Design
 
 ### **1️⃣ Family Table**
@@ -94,52 +140,6 @@ Over time, the system learns patterns and provides personalized food suggestions
 ## 🏁 Conclusion
 This project showcases how an everyday household problem can be modeled and solved using relational databases.  
 Through clear entity relationships, efficient schema design, and structured queries, the system highlights the practical implementation of DBMS principles in a real-world scenario.
-
----
-
-## 👨‍💻 Tech Stack
-- **Backend:** PostgreSQL, Node.js (Express), FastAPI (Python)
-- **Frontend:** HTML, CSS, JavaScript
-- **Deployment:** Vercel (Frontend + Node.js Backend)
-
----
-
-## 📁 Project Structure
-```
-FlavorMatch/
-├── api/                           # Node.js Backend (Express)
-│   ├── server.js                  # Main server file
-│   ├── package.json               # Node.js dependencies
-│   ├── config/
-│   │   └── db.js                  # PostgreSQL connection config
-│   ├── controllers/
-│   │   └── authController.js      # Authentication logic
-│   └── routes/
-│       └── authRoutes.js          # API routes
-│
-├── fastapi-backend/               # Python Backend (FastAPI)
-│   ├── main.py                    # FastAPI main application
-│   ├── requirements.txt           # Python dependencies
-│   ├── models/
-│   │   └── prompt_request.py      # Request models
-│   ├── routers/
-│   │   └── chat.py                # Chat API endpoints
-│   └── utils/
-│       ├── chatbot_response.py    # AI chatbot logic
-│       ├── gemini.py              # Google Gemini AI integration
-│       ├── sql_query_generator.py # SQL query generation
-│       └── supabase_config.py     # Supabase configuration
-│
-├── public/                        # Frontend (Static Files)
-│   ├── index.html                 # Login page
-│   ├── register_family.html       # Family registration
-│   ├── register_member.html       # Member registration
-│   └── dashboard.html             # Food tracking dashboard
-│
-├── vercel.json                    # Vercel deployment configuration
-├── postgresql_table_creation_code.txt  # Database schema
-└── README.md                      # Project documentation
-```
 
 ---
 
