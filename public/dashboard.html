@@ -17,6 +17,10 @@
             --sage: #8a9a5b;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, var(--dark-truffle) 0%, #15110c 100%);
@@ -63,6 +67,8 @@
             background: var(--dark-truffle);
             color: var(--vanilla);
             transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-size: 16px;
         }
 
         input:focus, select:focus {
@@ -92,6 +98,7 @@
             margin-top: 10px;
             font-weight: 600;
             transition: transform 0.2s ease;
+            box-sizing: border-box;
         }
 
         button:hover {
@@ -189,8 +196,8 @@
                 <option value="No">Disliked</option>
             </select>
             
-            <div id="errorMessage" style="color: #ff6b6b; margin: 10px 0; display: none;"></div>
-            <div id="successMessage" style="color: #4CAF50; margin: 10px 0; display: none;"></div>
+            <div id="errorMessage" style="color: #ff6b6b; margin: 10px 0; display: none; text-align: center; font-size: 14px;"></div>
+            <div id="successMessage" style="color: #4CAF50; margin: 10px 0; display: none; text-align: center; font-size: 14px;"></div>
             
             <button onclick="addFood()">Add Food</button>
         </div>
