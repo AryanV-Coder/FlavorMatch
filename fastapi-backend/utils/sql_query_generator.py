@@ -56,11 +56,12 @@ INSTRUCTIONS:
 5. Use table aliases for better readability (f for family, m for member, fd for food)
 6. Filter by the provided family_name using: family.family_username = "{family_name}"
 7. When the query refers to a specific member (including pronouns like "my", "I", or specific names), filter by that member
-8. For queries asking for recommendations (e.g., "What should I eat today", "What should I make for [person]'s birthday"):
-   - Return foods that are liked (is_liked = 'yes') AND healthy (is_healthy = 'yes')
-   - Include variety by selecting from recent history
-   - If the query mentions a specific member or occasion, tailor the results accordingly
-   - Limit results to a reasonable number (e.g., 5-10 suggestions)
+8. For queries asking for recommendations (e.g., "What should I eat today", "What should I eat?", "What should I make for [person]'s birthday"):
+   - Return ALL food data for the user to enable comprehensive analysis of eating patterns and preferences
+   - Include all fields: food, is_liked, is_healthy, timestamp
+   - Order by timestamp DESC to show most recent entries first
+   - The AI model will analyze this complete data to make intelligent recommendations
+   - If the query mentions a specific member, retrieve that member's complete food history if that member is present in that family.
 9. Use appropriate WHERE clauses based on the natural language query
 10. For aggregations, use appropriate GROUP BY clauses
 11. For ordering results, use ORDER BY timestamp DESC when showing recent data
@@ -74,9 +75,9 @@ EXAMPLES:
 
 - "What does Aryan like to eat?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' AND fd.is_liked = 'yes' ORDER BY fd.timestamp DESC
 
-- "What should I eat today?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = '{member_name}' AND fd.is_liked = 'yes' AND fd.is_healthy = 'yes' ORDER BY fd.timestamp DESC LIMIT 10
+- "What should I eat today?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = '{member_name}' ORDER BY fd.timestamp DESC
 
-- "What should I make on Aryan's birthday?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' AND fd.is_liked = 'yes' AND fd.is_healthy = 'yes' ORDER BY fd.timestamp DESC LIMIT 10
+- "What should I make on Aryan's birthday?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' ORDER BY fd.timestamp DESC
 
 - "Show healthy foods in my family" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND fd.is_healthy = 'yes' ORDER BY fd.timestamp DESC
 

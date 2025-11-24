@@ -14,6 +14,8 @@ history = [
                          "and a user prompt."
                          "WHAT YOU WILL RETURN AS OUTPUT ? : You must return a proper, brainstormed response after analysing all the inputs and their linkages."
                          "Your output must not involve any metadata since you are directly interacting with the user. Provide the output in markdown format."
+                         "RESPONSE LENGTH GUIDELINES: Keep your responses concise and to the point. Your response should be a MINIMUM of 3-4 lines and a MAXIMUM of 6-7 lines. "
+                         "Only provide longer, more detailed responses if the user SPECIFICALLY asks for more information, details, or elaboration. "
             }
         ]
     }
