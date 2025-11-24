@@ -71,17 +71,18 @@ INSTRUCTIONS:
 15. Field values are stored as follows:
     - is_liked: 'Yes' or 'No' (capitalized)
     - is_healthy: 'Healthy' or 'Junk' (capitalized)
+16. When filtering by is_liked or is_healthy in the WHERE clause, ALWAYS include both fd.is_liked and fd.is_healthy in the SELECT statement to provide complete context
 
 EXAMPLES:
 - "Show all my food history" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = '{member_name}' ORDER BY fd.timestamp DESC
 
-- "What does Aryan like to eat?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' AND fd.is_liked = 'Yes' ORDER BY fd.timestamp DESC
+- "What does Aryan like to eat?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' AND fd.is_liked = 'Yes' ORDER BY fd.timestamp DESC
 
 - "What should I eat today?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = '{member_name}' ORDER BY fd.timestamp DESC
 
 - "What should I make on Aryan's birthday?" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND m.member_username = 'Aryan' ORDER BY fd.timestamp DESC
 
-- "Show healthy foods in my family" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND fd.is_healthy = 'Healthy' ORDER BY fd.timestamp DESC
+- "Show healthy foods in my family" → SELECT f.family_username AS family_name, m.member_username AS member_name, fd.food, fd.is_liked, fd.is_healthy, fd.timestamp FROM food fd JOIN member m ON fd.member_id = m.member_id JOIN family f ON m.family_id = f.family_id WHERE f.family_username = '{family_name}' AND fd.is_healthy = 'Healthy' ORDER BY fd.timestamp DESC
 
 """
                 }
