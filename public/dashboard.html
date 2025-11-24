@@ -345,6 +345,7 @@
             border: 1px solid var(--olive) !important;
             border-radius: 12px !important;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            scroll-behavior: smooth;
         }
 
         #user-input {
@@ -496,7 +497,11 @@
             }
             
             chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Smooth scroll to the latest message
+            setTimeout(() => {
+                messageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }, 100);
         }
 
         function showTypingIndicator() {
@@ -506,7 +511,11 @@
             typingDiv.id = 'typing-indicator';
             typingDiv.textContent = 'AI is thinking...';
             chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Smooth scroll to typing indicator
+            setTimeout(() => {
+                typingDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }, 100);
         }
 
         function removeTypingIndicator() {
